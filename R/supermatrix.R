@@ -1,4 +1,4 @@
-#' The supermatrix function
+#' The Supermatrix function
 #' 
 #' Not really a matrix! This function allows you to perform multiple pairwise association tests between numerical/categorical variables (phenotypes) and aligned amino-acid sites (categorical), create a matrix of p-values and adjust them by several p-value adjustment methods. For numeric vs. categorical data, Kruskal-Wallis test is used. For categorical data, Fisher Exact test is used. See details for more information.
 #' 
