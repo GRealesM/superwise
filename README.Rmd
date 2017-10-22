@@ -1,0 +1,32 @@
+## Superwise README
+
+The Superwise package has its origins in the Supermatrix function, which evolved into the Superwise function. Both functions have their common goal in performing a high number of classic statistical tests between two sets of variables, pairwise, in one go.
+
+Initially, I had data on ecological/life history, phenotypic traits for a number of animal species (Set 1), and protein alignments for each species (Set 2). I wanted to explore whether there was any association between phenotypic traits and specific aminoacids at specific protein sites, so I created superwise function to perform multiple tests for each combination of two variables in Set 1 and Set 2.
+
+The input data frame can have both sets, separated by columns. I recommend to put Set1 in the first columns, and Set2 in the following columns, so later on you can tell superwise/supermatrix functions which columns corresponds to each set (See documentation files for each function).
+
+### Superwise/Supermatrix commons
+
+We assume that variables in Set 1 (phenotypes) may be numeric (e.g. lifespan, in years) or categorical (e.g. Diurnal/nocturnal species) with two or more unordered discrete categories. In Set 2, we expect all variables to be categorical, corresponding to the aminoacids in each site. You can use one column for each site of interest, or use one column per aminoacid per site, and use presence/absence notation. The latter will allow you to discern more easily which aminoacid in a given site is associated with the trait.
+
+Both functions will perform the following tests:
+
+- _Kruskal-Wallis test_ for numeric variables in Set 1.
+- _Fisher's Exact test_ for character variables in Set 2.
+
+**IMPORTANT**: Each categorical variable must be coerced to factor. Every variable in Set 2 must be a factor, regardless you chose to use one column per site, or presence/absence criteria. Do this before running Superwise/Supermatrix functions.
+
+### Superwise/Supermatrix differences
+
+Basically:
+
+- _supermatrix_ will create a data frame with Set 1 variables in rows, Set2 in columns, and P-values for each test in cells. Additionally, if `control=TRUE`, two columns will be added at the beginning of the data frame, identifying the class of the variable in Set 1, and the corresponding test applied; this can be used as a control that everything went well.
+- _superwise_ will create a data frame with corresponding Set 1 and Set 2 variables in the first two columns, and columns with the name of the test, some statistics for the corresponding test, P-value, and correction values.
+
+For more information on the functions, see function documentation by typing `?spw` or `?supermatrix`
+
+Given that _superwise_ function provides more information than _supermatrix_, I encourage the use of the former, rather than the latter, _not so wise_ function.
+
+
+
