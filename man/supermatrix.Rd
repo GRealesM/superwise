@@ -2,7 +2,7 @@
 % Please edit documentation in R/supermatrix.R
 \name{supermatrix}
 \alias{supermatrix}
-\title{The supermatrix function}
+\title{The Supermatrix function}
 \usage{
 supermatrix(x, var, mut, fisher.method = "exact", correction = NULL,
   control = TRUE)
@@ -27,8 +27,8 @@ A matrix-like dataframe with P-values for each test performed.
 Not really a matrix! This function allows you to perform multiple pairwise association tests between numerical/categorical variables (phenotypes) and aligned amino-acid sites (categorical), create a matrix of p-values and adjust them by several p-value adjustment methods. For numeric vs. categorical data, Kruskal-Wallis test is used. For categorical data, Fisher Exact test is used. See details for more information.
 }
 \details{
-Supermatrix function was designed to perform multiple association analyses between phenotypic/life history traits, and proteic sites across multiple animal species. Such data should be distributed in columns, using rows for each species to be included in the analyses. The recommended format is a single data.frame containing the two sets of data to be compared pairwise. 
-		Set1 must ideally contain phenotypic data (in columns), which can be quantitative (e.g. number of offspring, weight, etc) or categorical unordered (e.g. diurnal/nocturnal, herbivore/carnivore/omnivore) data. 
+Supermatrix function was designed to perform multiple association analyses between phenotypic/life history traits, and proteic sites across multiple animal species. Such data should be distributed in columns, using rows for each species to be included in the analyses. The recommended format is a single data.frame containing the two sets of data to be compared pairwise.
+		Set1 must ideally contain phenotypic data (in columns), which can be quantitative (e.g. number of offspring, weight, etc) or categorical unordered (e.g. diurnal/nocturnal, herbivore/carnivore/omnivore) data.
 	Set2 must ideally contain categorical unordered data, such as which amino-acid in a specific site in a proteic sequence.
 		IMPORTANT: Categorical data must be of factor class.
 		Since \code{supermatrix} only creates a data frame with P-values (which may be insufficient in most cases), we encourage using \code{\link{spw}} function instead.

@@ -1,6 +1,6 @@
 Package: superwise
 Title: Pairwise classical association tests for qualitative and quantitative variables
-Version: 0.1.0
+Version: 0.1.1
 Date: 2017-10-14
 Authors@R: person("Guillermo", "Reales", email = "grealesm@gmail.com", role = c("aut", "cre", "cph"))
 Description: This package contains the Superwise functions, as well several accessory functions. Superwise function performs pairwise classical association analyses (i.e. Kruskal Wallis and Fisher's Exact tests) on two sets of data - initially ecological-life history data (quantitative or qualitative) and aligned genetic/protein sequence data. 
