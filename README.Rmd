@@ -12,14 +12,11 @@ We assume that variables in Set 1 (phenotypes) may be numeric (e.g. lifespan, in
 
 Both functions will perform the following tests:
 
-- _Kruskal-Wallis test_ for numeric variables in Set 1.
-- _Fisher's Exact test_ for character variables in Set 2.
+- _Kruskal-Wallis test_ for numeric variables (in Set 1).
+- _Fisher's Exact test_ for character variables (in Set 1).
 
-**IMPORTANT**: Each categorical variable must be coerced to factor. Every variable in Set 2 must be a factor, regardless you chose to use one column per site, or presence/absence criteria. Do this before running Superwise/Supermatrix functions.
 
 ### Superwise/Supermatrix differences
-
-Basically:
 
 - _supermatrix_ will create a data frame with Set 1 variables in rows, Set2 in columns, and P-values for each test in cells. Additionally, if `control=TRUE`, two columns will be added at the beginning of the data frame, identifying the class of the variable in Set 1, and the corresponding test applied; this can be used as a control that everything went well.
 - _superwise_ will create a data frame with corresponding Set 1 and Set 2 variables in the first two columns, and columns with the name of the test, some statistics for the corresponding test, P-value, and correction values.

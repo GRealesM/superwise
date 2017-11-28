@@ -19,7 +19,11 @@
 #' @export
 
 spw <- function(x, v1, v2, fisher.method="exact", correction = NULL, control = TRUE){
-  #We start by dividing our dataframe and creating empty vectors
+  #We start by making sure that all character and logical columns are properly transformed to factors
+  x[sapply(x, is.character)] <- lapply(x[sapply(x, is.character)], as.factor)
+  x[sapply(x, is.logical)] <- lapply(x[sapply(x, is.logical)], as.factor)
+  x[sapply(x[v2], is.numeric)] <- lapply(x[sapply(x[v2], is.numeric)], as.factor)
+  #Then we our dataframe and creating empty vectors
   v1.tab <- x[,v1] #Dataframe with characteristics data
   v2.tab <- x[,v2] #Dataframe with mutation data
   Var1 <- character()
@@ -42,7 +46,7 @@ for(z in 1:length(v1.tab[1,])){
           KW <- kruskal.test(v1.tab[,z], v2.tab[,y])
           Var1[i] <- names(v1.tab[z])
           Var2[i] <- names(v2.tab[y])
-          numeric[i] <- TRUE
+          numeric[i] <- is.numeric(v1.tab[,z])
           Test[i] <- "Kruskal-Wallis"
           FET.IC1[i] <- NA
           FET.IC2[i] <- NA
@@ -55,7 +59,7 @@ for(z in 1:length(v1.tab[1,])){
         else {
           Var1[i] <- names(v1.tab[z])
           Var2[i] <- names(v2.tab[y])
-          is.numeric[i] <- TRUE
+          numeric[i] <- TRUE
           Test[i] <- "No test applied"
           FET.IC1[i] <- NA
           FET.IC2[i] <- NA
@@ -72,13 +76,21 @@ for(z in 1:length(v1.tab[1,])){
             if (nlevels(as.factor(cc[,2])) >=2L){
               if (fisher.method == "exact"){
                 fet <- fisher.test(table(v1.tab[,z], v2.tab[,y]), workspace = 2e5)
+                dins <- sum(dim(table(v1.tab[,z], v2.tab[,y])))
                 Var1[i] <- names(v1.tab[z])
                 Var2[i] <- names(v2.tab[y])
                 numeric[i] <- is.numeric(v1.tab[,z])
                 Test[i] <- "Fisher's Exact Test"
+                if (dins == 4){
                 FET.IC1[i] <- fet$conf.int[[1]]
                 FET.IC2[i] <- fet$conf.int[[2]]
                 FET.OR[i] <- fet$estimate[[1]]
+                }
+                else{
+                FET.IC1[i] <- NA
+                FET.IC2[i] <- NA
+                FET.OR[i] <- NA
+                }
                 KW.statistic[i] <- NA
                 KW.df[i] <- NA
                 P.value[i] <- fet$p.value
@@ -86,13 +98,21 @@ for(z in 1:length(v1.tab[1,])){
               }
               if (fisher.method == "sim"){
                 fet <- fisher.test(table(v1.tab[,z], v2.tab[,y]), simulate.p.value = T, B = 20000)
+                dins <- sum(dim(table(v1.tab[,z], v2.tab[,y])))
                 Var1[i] <- names(v1.tab[z])
                 Var2[i] <- names(v2.tab[y])
                 numeric[i] <- is.numeric(v1.tab[,z])
                 Test[i] <- "Fisher's Exact Test (Sim)"
-                FET.IC1[i] <- fet$conf.int[[1]]
-                FET.IC2[i] <- fet$conf.int[[2]]
-                FET.OR[i] <- fet$estimate[[1]]
+                if (dins == 4){
+                  FET.IC1[i] <- fet$conf.int[[1]]
+                  FET.IC2[i] <- fet$conf.int[[2]]
+                  FET.OR[i] <- fet$estimate[[1]]
+                }
+                else{
+                  FET.IC1[i] <- NA
+                  FET.IC2[i] <- NA
+                  FET.OR[i] <- NA
+                }
                 KW.statistic[i] <- NA
                 KW.df[i] <- NA
                 P.value[i] <- fet$p.value
@@ -100,13 +120,21 @@ for(z in 1:length(v1.tab[1,])){
               }
               if (fisher.method == "hybrid"){
                 fet <- fisher.test(table(v1.tab[,z], v2.tab[,y]), hybrid = T, workspace = 2e8)
+                dins <- sum(dim(table(v1.tab[,z], v2.tab[,y])))
                 Var1[i] <- names(v1.tab[z])
                 Var2[i] <- names(v2.tab[y])
                 numeric[i] <- is.numeric(v1.tab[,z])
                 Test[i] <- "Fisher's Exact Test (Hybrid)"
-                FET.IC1[i] <- fet$conf.int[[1]]
-                FET.IC2[i] <- fet$conf.int[[2]]
-                FET.OR[i] <- fet$estimate[[1]]
+                if (dins == 4){
+                  FET.IC1[i] <- fet$conf.int[[1]]
+                  FET.IC2[i] <- fet$conf.int[[2]]
+                  FET.OR[i] <- fet$estimate[[1]]
+                }
+                else{
+                  FET.IC1[i] <- NA
+                  FET.IC2[i] <- NA
+                  FET.OR[i] <- NA
+                }
                 KW.statistic[i] <- NA
                 KW.df[i] <- NA
                 P.value[i] <- fet$p.value
